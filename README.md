@@ -7,7 +7,7 @@
    Öffne ein Terminal im Docker-Container und wechsle in folgendes Verzeichnis:
      ```
    cd ib610/codegenerator
-       ```
+     ```
 
 
 3. **Code generieren:**
