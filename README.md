@@ -5,19 +5,24 @@
 1. **In das Verzeichnis navigieren:**
    
    Öffne ein Terminal im Docker-Container und wechsle in folgendes Verzeichnis:
+     ```
    cd ib610/codegenerator
+       ```
 
 
-2. **Code generieren:**
+3. **Code generieren:**
 
 Führe den Befehl aus:
+  ```
 make
-
+  ```
 
 3. **Tests erstellen:**
 
 Danach starte den Testlauf:
+  ```
 make test
+  ```
 
 
 4. **Testausgabe:**
