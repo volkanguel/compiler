@@ -9,9 +9,9 @@
 1. **In das Verzeichnis navigieren:**
    
    Öffne ein Terminal im Docker-Container und wechsle in folgendes Verzeichnis:
-     ```
-   cd ib610/codegenerator
-     ```
+  ```
+cd ib610/Codegenerator
+  ```
 
 
 2. **Code generieren:**
