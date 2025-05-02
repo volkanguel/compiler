@@ -2,6 +2,10 @@
 
 ## Schritte zum Ausführen
 
+0. **Package installieren:**
+
+   Es reicht nur das Package Compiler zu installieren
+
 1. **In das Verzeichnis navigieren:**
    
    Öffne ein Terminal im Docker-Container und wechsle in folgendes Verzeichnis:
@@ -10,7 +14,7 @@
      ```
 
 
-3. **Code generieren:**
+2. **Code generieren:**
 
 Führe den Befehl aus:
   ```
