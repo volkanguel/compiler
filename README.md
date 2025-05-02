@@ -46,3 +46,4 @@ Wenn der Test erfolgreich war, wird eine Datei namens `test.out` im aktuellen Ve
 
 ## Hinweise
 - im Verzeichnis befindet sich ein Makefile für weitere Infos
+- In Compiler.pdf befinden sich Screenshots vom Code und von der Ausgabe
