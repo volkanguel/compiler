@@ -1,0 +1,1141 @@
+	.data
+_true:	.asciiz "true"	#"true"
+_false:	.asciiz "false"	#"false"
+_.newline:	.asciiz "\n"	#"\n"
+# Code generation for class body
+
+	# Static field declaration: bool
+bool: .word 0
+
+	# Static field declaration: staticString
+staticString: .asciiz ""
+
+	# Static field declaration: addi
+addiVar: .word 0
+	.text
+	.globl main
+factorial:	#Method Entry
+	# Begin method body
+	add   $fp, $sp, $zero
+	subu  $sp, $sp, 4
+	sw    $ra, 0($sp)
+	subu  $sp, $sp, 4
+	lw    $a0, 0($fp)		#Load local variable n
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 1
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	seq   $a0, $t1, $a0
+	beq   $a0, 1, ._L0
+	j     ._L2
+._L0:	#
+	lw    $a0, 0($fp)		#Load local variable n
+	move  $v0, $a0
+	addu  $sp, $sp, 4
+	lw    $ra, 0($sp)
+	addu  $sp, $sp, 4
+	addu  $sp, $sp, 4
+	lw    $fp, 0($sp)
+	addu  $sp, $sp, 4
+	jr    $ra
+._L2:	#
+	subu  $sp, $sp, 4
+	sw    $fp, 0($sp)
+	lw    $a0, 0($fp)		#Load local variable n
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 1
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	sub   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	jal   factorial
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 0($fp)		#Load local variable n
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	mul   $a0, $t1, $a0
+	move  $v0, $a0
+	addu  $sp, $sp, 4
+	lw    $ra, 0($sp)
+	addu  $sp, $sp, 4
+	addu  $sp, $sp, 4
+	lw    $fp, 0($sp)
+	addu  $sp, $sp, 4
+	jr    $ra
+	# End method body
+boolTester:	#Method Entry
+	# Begin method body
+	add   $fp, $sp, $zero
+	subu  $sp, $sp, 4
+	sw    $ra, 0($sp)
+	subu  $sp, $sp, 4
+
+	# Local variable declaration: str
+	sw    $zero, -8($fp)		#Initialize local variable to 0
+	li    $a0, -1
+	la    $t0, bool		#Load address of global variable bool
+	sw    $a0, 0($t0)		#Store value in variable bool
+	.data
+._L3:	.asciiz "hallo"
+	.text
+	la    $a0, ._L3
+	sw    $a0, -8($fp)		#Store value in variable str
+	.data
+._L4:	.asciiz "welt"
+	.text
+	la    $a0, ._L4
+	la    $t0, staticString		#Load address of global variable staticString
+	sw    $a0, 0($t0)		#Store value in variable staticString
+	.data
+._L5:	.asciiz "Verschiedene Strings vergleich"
+	.text
+	la    $a0, ._L5
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -8($fp)		#Load local variable str
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	la    $t0, staticString		#Load address of global variable staticString
+	lw    $a0, 0($t0)		#Load global variable staticString
+	la    $t0, staticString		#Load address of global variable staticString
+	lw    $a0, 0($t0)		#Load value of global variable staticString
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	seq   $a0, $t1, $a0
+	bne   $a0, 0, ._L6
+	la    $a0, _false
+	j     ._L7
+._L6:	#
+	la    $a0, _true
+	j     ._L7
+._L7:	#
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L8:	.asciiz "Vergleiche Strings identisch aber Adresse nicht gleich"
+	.text
+	la    $a0, ._L8
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L9:	.asciiz "hallo"
+	.text
+	la    $a0, ._L9
+	la    $t0, staticString		#Load address of global variable staticString
+	sw    $a0, 0($t0)		#Store value in variable staticString
+	la    $t0, staticString		#Load address of global variable staticString
+	lw    $a0, 0($t0)		#Load global variable staticString
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -8($fp)		#Load local variable str
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -8($fp)		#Load local variable str
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	la    $t0, staticString		#Load address of global variable staticString
+	lw    $a0, 0($t0)		#Load global variable staticString
+	la    $t0, staticString		#Load address of global variable staticString
+	lw    $a0, 0($t0)		#Load value of global variable staticString
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	seq   $a0, $t1, $a0
+	bne   $a0, 0, ._L10
+	la    $a0, _false
+	j     ._L11
+._L10:	#
+	la    $a0, _true
+	j     ._L11
+._L11:	#
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L12:	.asciiz "Weise String gleiche Adresse zu"
+	.text
+	la    $a0, ._L12
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	la    $t0, staticString		#Load address of global variable staticString
+	lw    $a0, 0($t0)		#Load global variable staticString
+	sw    $a0, -8($fp)		#Store value in variable str
+	lw    $a0, -8($fp)		#Load local variable str
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	la    $t0, staticString		#Load address of global variable staticString
+	lw    $a0, 0($t0)		#Load global variable staticString
+	la    $t0, staticString		#Load address of global variable staticString
+	lw    $a0, 0($t0)		#Load value of global variable staticString
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	seq   $a0, $t1, $a0
+	bne   $a0, 0, ._L13
+	la    $a0, _false
+	j     ._L14
+._L13:	#
+	la    $a0, _true
+	j     ._L14
+._L14:	#
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	addu  $sp, $sp, 4
+	lw    $ra, 0($sp)
+	addu  $sp, $sp, 4
+	addu  $sp, $sp, 0
+	lw    $fp, 0($sp)
+	addu  $sp, $sp, 4
+	jr    $ra
+	# End method body
+ifTest:	#Method Entry
+	# Begin method body
+	add   $fp, $sp, $zero
+	subu  $sp, $sp, 4
+	sw    $ra, 0($sp)
+	subu  $sp, $sp, 16
+
+	# Local variable declaration: x
+	sw    $zero, -8($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: notassigned
+	sw    $zero, -12($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: y
+	sw    $zero, -16($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: b
+	sw    $zero, -20($fp)		#Initialize local variable to 0
+	li    $a0, -1
+	sw    $a0, -20($fp)		#Store value in variable b
+	li    $a0, 10
+	sw    $a0, -8($fp)		#Store value in variable x
+	li    $a0, 100
+	sw    $a0, -16($fp)		#Store value in variable y
+	.data
+._L15:	.asciiz "Not Assigned"
+	.text
+	la    $a0, ._L15
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -12($fp)		#Load local variable notassigned
+	bne   $a0, 0, ._L16
+	la    $a0, _false
+	j     ._L17
+._L16:	#
+	la    $a0, _true
+	j     ._L17
+._L17:	#
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -12($fp)		#Load local variable notassigned
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -20($fp)		#Load local variable b
+	seq   $a0, $a0, 0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	seq   $a0, $t1, $a0
+	bne   $a0, 0, ._L18
+	la    $a0, _false
+	j     ._L19
+._L18:	#
+	la    $a0, _true
+	j     ._L19
+._L19:	#
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -8($fp)		#Load local variable x
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -16($fp)		#Load local variable y
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	slt   $a0, $t1, $a0
+	beq   $a0, 1, ._L20
+	j     ._L22
+._L20:	#
+	.data
+._L23:	.asciiz "x kleiner y"
+	.text
+	la    $a0, ._L23
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+._L22:	#
+	lw    $a0, -8($fp)		#Load local variable x
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -16($fp)		#Load local variable y
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	slt   $a0, $a0, $t1
+	beq   $a0, 1, ._L24
+	.data
+._L27:	.asciiz "x nicht groeser y"
+	.text
+	la    $a0, ._L27
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -8($fp)		#Load local variable x
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -16($fp)		#Load local variable y
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	seq   $a0, $t1, $a0
+	beq   $a0, 1, ._L28
+	.data
+._L31:	.asciiz "x ungleich y"
+	.text
+	la    $a0, ._L31
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	li    $v0, 0
+	move  $v0, $a0
+	addu  $sp, $sp, 16
+	lw    $ra, 0($sp)
+	addu  $sp, $sp, 4
+	addu  $sp, $sp, 0
+	lw    $fp, 0($sp)
+	addu  $sp, $sp, 4
+	jr    $ra
+	j     ._L30
+._L28:	#
+	.data
+._L32:	.asciiz "ERROR"
+	.text
+	la    $a0, ._L32
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+._L30:	#
+	j     ._L26
+._L24:	#
+	.data
+._L33:	.asciiz "ERROR"
+	.text
+	la    $a0, ._L33
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+._L26:	#
+	.data
+._L34:	.asciiz "ERROR RETURN VORHER"
+	.text
+	la    $a0, ._L34
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	addu  $sp, $sp, 16
+	lw    $ra, 0($sp)
+	addu  $sp, $sp, 4
+	addu  $sp, $sp, 0
+	lw    $fp, 0($sp)
+	addu  $sp, $sp, 4
+	jr    $ra
+	# End method body
+whileggt:	#Method Entry
+	# Begin method body
+	add   $fp, $sp, $zero
+	subu  $sp, $sp, 4
+	sw    $ra, 0($sp)
+	subu  $sp, $sp, 12
+
+	# Local variable declaration: temp
+	sw    $zero, -8($fp)		#Initialize local variable to 0
+._L35:	#
+	lw    $a0, 0($fp)		#Load local variable a
+	sw    $a0, -8($fp)		#Store value in variable temp
+	lw    $a0, 4($fp)		#Load local variable b
+	sw    $a0, 0($fp)		#Store value in variable a
+	lw    $a0, -8($fp)		#Load local variable temp
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -8($fp)		#Load local variable temp
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 4($fp)		#Load local variable b
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	div   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 4($fp)		#Load local variable b
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	mul   $a0, $t1, $a0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	sub   $a0, $t1, $a0
+	sw    $a0, 4($fp)		#Store value in variable b
+	lw    $a0, 4($fp)		#Load local variable b
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	sne   $a0, $t1, $a0
+	beq   $a0, 0, ._L36
+	j     ._L35
+._L36:	#
+	lw    $a0, 0($fp)		#Load local variable a
+	move  $v0, $a0
+	addu  $sp, $sp, 12
+	lw    $ra, 0($sp)
+	addu  $sp, $sp, 4
+	addu  $sp, $sp, 8
+	lw    $fp, 0($sp)
+	addu  $sp, $sp, 4
+	jr    $ra
+	# End method body
+test:	#Method Entry
+	# Begin method body
+	add   $fp, $sp, $zero
+	subu  $sp, $sp, 4
+	sw    $ra, 0($sp)
+	subu  $sp, $sp, 80
+
+	# Local variable declaration: a
+	sw    $zero, -48($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: b
+	sw    $zero, -52($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: c
+	sw    $zero, -56($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: d
+	sw    $zero, -60($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: e
+	sw    $zero, -64($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: f
+	sw    $zero, -68($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: g
+	sw    $zero, -72($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: h
+	sw    $zero, -76($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: i
+	sw    $zero, -80($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: jVar
+	sw    $zero, -84($fp)		#Initialize local variable to 0
+	li    $a0, 1
+	sw    $a0, -48($fp)		#Store value in variable a
+	li    $a0, 2
+	sw    $a0, -52($fp)		#Store value in variable b
+	li    $a0, 3
+	sw    $a0, -56($fp)		#Store value in variable c
+	li    $a0, 4
+	sw    $a0, -60($fp)		#Store value in variable d
+	li    $a0, 5
+	sw    $a0, -64($fp)		#Store value in variable e
+	li    $a0, 6
+	sw    $a0, -68($fp)		#Store value in variable f
+	li    $a0, 7
+	sw    $a0, -72($fp)		#Store value in variable g
+	li    $a0, 8
+	sw    $a0, -76($fp)		#Store value in variable h
+	li    $a0, 9
+	sw    $a0, -80($fp)		#Store value in variable i
+	li    $a0, 10
+	sw    $a0, -84($fp)		#Store value in variable jVar
+	.data
+._L37:	.asciiz "Erwarte 55"
+	.text
+	la    $a0, ._L37
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -48($fp)		#Load local variable a
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -52($fp)		#Load local variable b
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -56($fp)		#Load local variable c
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -60($fp)		#Load local variable d
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -64($fp)		#Load local variable e
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -68($fp)		#Load local variable f
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -72($fp)		#Load local variable g
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -76($fp)		#Load local variable h
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -80($fp)		#Load local variable i
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -84($fp)		#Load local variable jVar
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	li    $v0, 1
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L38:	.asciiz "Erwarte -55"
+	.text
+	la    $a0, ._L38
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, 0($fp)		#Load local variable aa
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 4($fp)		#Load local variable bb
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 8($fp)		#Load local variable cc
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 12($fp)		#Load local variable dd
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 16($fp)		#Load local variable ee
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 20($fp)		#Load local variable ff
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 24($fp)		#Load local variable gg
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 28($fp)		#Load local variable hh
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 32($fp)		#Load local variable ii
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 36($fp)		#Load local variable jj
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	li    $v0, 1
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L39:	.asciiz "Erwarte 0"
+	.text
+	la    $a0, ._L39
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -48($fp)		#Load local variable a
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 0($fp)		#Load local variable aa
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -52($fp)		#Load local variable b
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 4($fp)		#Load local variable bb
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -56($fp)		#Load local variable c
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 8($fp)		#Load local variable cc
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -60($fp)		#Load local variable d
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 12($fp)		#Load local variable dd
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -64($fp)		#Load local variable e
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 16($fp)		#Load local variable ee
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -68($fp)		#Load local variable f
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 20($fp)		#Load local variable ff
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -72($fp)		#Load local variable g
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 24($fp)		#Load local variable gg
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 28($fp)		#Load local variable hh
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -76($fp)		#Load local variable h
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 32($fp)		#Load local variable ii
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -80($fp)		#Load local variable i
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, 36($fp)		#Load local variable jj
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -84($fp)		#Load local variable jVar
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	li    $v0, 1
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	addu  $sp, $sp, 80
+	lw    $ra, 0($sp)
+	addu  $sp, $sp, 4
+	addu  $sp, $sp, 40
+	lw    $fp, 0($sp)
+	addu  $sp, $sp, 4
+	jr    $ra
+	# End method body
+main:	#Method Entry
+	# Begin method body
+	add   $fp, $sp, $zero
+	subu  $sp, $sp, 4
+	sw    $ra, 0($sp)
+	subu  $sp, $sp, 16
+
+	# Local variable declaration: bbb
+	sw    $zero, -8($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: str
+	sw    $zero, -12($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: x
+	sw    $zero, -16($fp)		#Initialize local variable to 0
+
+	# Local variable declaration: a
+	sw    $zero, -20($fp)		#Initialize local variable to 0
+	li    $a0, 0
+	sw    $a0, -8($fp)		#Store value in variable bbb
+	.data
+._L40:	.asciiz "HALLO WELT"
+	.text
+	la    $a0, ._L40
+	sw    $a0, -12($fp)		#Store value in variable str
+	li    $a0, 4211
+	la    $t0, addiVar		#Load address of global variable addiVar
+	sw    $a0, 0($t0)		#Store value in variable addiVar
+	subu  $sp, $sp, 4
+	sw    $fp, 0($sp)
+	jal   ifTest
+	.data
+._L41:	.asciiz "fak(5)=)"
+	.text
+	la    $a0, ._L41
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	subu  $sp, $sp, 4
+	sw    $fp, 0($sp)
+	li    $a0, 5
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	jal   factorial
+	li    $v0, 1
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L42:	.asciiz "
+"
+	.text
+	la    $a0, ._L42
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L43:	.asciiz " x = 199 + 42 / 10"
+	.text
+	la    $a0, ._L43
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	li    $a0, 199
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 42
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 10
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	div   $a0, $t1, $a0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	sw    $a0, -16($fp)		#Store value in variable x
+	lw    $a0, -16($fp)		#Load local variable x
+	li    $v0, 1
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L44:	.asciiz "
+"
+	.text
+	la    $a0, ._L44
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	subu  $sp, $sp, 4
+	sw    $fp, 0($sp)
+	li    $a0, -10
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	li    $a0, -9
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	li    $a0, -8
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	li    $a0, -7
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	li    $a0, -6
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	li    $a0, -5
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	li    $a0, -4
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	li    $a0, -3
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	li    $a0, -2
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	li    $a0, -1
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	jal   test
+	.data
+._L45:	.asciiz "
+"
+	.text
+	la    $a0, ._L45
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	li    $a0, 1000
+	sw    $a0, -16($fp)		#Store value in variable x
+	lw    $a0, -16($fp)		#Load local variable x
+	li    $v0, 1
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -16($fp)		#Load local variable x
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 1000
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	sle   $a0, $a0, $t1
+	beq   $a0, 1, ._L46
+	.data
+._L49:	.asciiz "x ist kleiner 10000"
+	.text
+	la    $a0, ._L49
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	j     ._L48
+._L46:	#
+	.data
+._L50:	.asciiz "x ist groeser gleich 1000"
+	.text
+	la    $a0, ._L50
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+._L48:	#
+	.data
+._L51:	.asciiz "
+"
+	.text
+	la    $a0, ._L51
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L52:	.asciiz "Erwarte 100"
+	.text
+	la    $a0, ._L52
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	li    $a0, 42
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 42
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	div   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	lw    $a0, -16($fp)		#Load local variable x
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 1000
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	sub   $a0, $t1, $a0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 100
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 1
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	mul   $a0, $t1, $a0
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	add   $a0, $t1, $a0
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)		#PUSH
+	li    $a0, 1
+	lw    $t1, 0($sp)		#POP
+	addu  $sp, $sp, 4
+	sub   $a0, $t1, $a0
+	sw    $a0, -16($fp)		#Store value in variable x
+	lw    $a0, -16($fp)		#Load local variable x
+	li    $v0, 1
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L53:	.asciiz "
+"
+	.text
+	la    $a0, ._L53
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	subu  $sp, $sp, 4
+	sw    $fp, 0($sp)
+	jal   boolTester
+	.data
+._L54:	.asciiz "
+"
+	.text
+	la    $a0, ._L54
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L55:	.asciiz "addi="
+	.text
+	la    $a0, ._L55
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	la    $t0, addiVar		#Load address of global variable addiVar
+	lw    $a0, 0($t0)		#Load global variable addiVar
+	li    $v0, 1
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L56:	.asciiz "bbb="
+	.text
+	la    $a0, ._L56
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -8($fp)		#Load local variable bbb
+	bne   $a0, 0, ._L57
+	la    $a0, _false
+	j     ._L58
+._L57:	#
+	la    $a0, _true
+	j     ._L58
+._L58:	#
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L59:	.asciiz "str="
+	.text
+	la    $a0, ._L59
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -12($fp)		#Load local variable str
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L60:	.asciiz "x="
+	.text
+	la    $a0, ._L60
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	lw    $a0, -16($fp)		#Load local variable x
+	li    $v0, 1
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L61:	.asciiz "
+"
+	.text
+	la    $a0, ._L61
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	.data
+._L62:	.asciiz "whileggt(24,16)"
+	.text
+	la    $a0, ._L62
+	li    $v0, 4
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	subu  $sp, $sp, 4
+	sw    $fp, 0($sp)
+	li    $a0, 16
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	li    $a0, 24
+	subu  $sp, $sp, 4
+	sw    $a0, 0($sp)
+	jal   whileggt
+	li    $v0, 1
+	syscall
+	la    $a0, _.newline
+	li    $v0, 4
+	syscall
+	li    $v0, 10
+	syscall
+	# End method body
+# End of class body
